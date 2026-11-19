@@ -1,0 +1,304 @@
+@import 'tailwindcss';
+@import '../../vendor/livewire/flux/dist/flux.css';
+
+@source "../views";
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
+@source '../../vendor/livewire/flux/stubs/**/*.blade.php';
+
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(.light, .light *));
+
+:root {
+    --bg-page: #080c14;
+    --bg-surface: #0b1120;
+    --bg-card: #0f172a;
+    --bg-card-hover: #1e293b;
+    --border-color: rgba(255, 255, 255, 0.06);
+    --border-highlight: rgba(255, 255, 255, 0.12);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --brand-lime: #d2e823;
+    --brand-lime-dim: rgba(210, 232, 35, 0.12);
+    --topbar-bg: rgba(8, 12, 20, 0.75);
+    --sidebar-bg: #020617;
+}
+
+html.light, [data-theme="light"] {
+    --bg-page: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f1f5f9;
+    --border-color: #e2e8f0;
+    --border-highlight: #cbd5e1;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --brand-lime: #a3b814;
+    --brand-lime-dim: rgba(163, 184, 20, 0.15);
+    --topbar-bg: rgba(255, 255, 255, 0.85);
+    --sidebar-bg: #ffffff;
+}
+
+body {
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+html.light body {
+    background: #f8fafc;
+    color: #0f172a;
+}
+
+html.dark body {
+    background: #080c14;
+    color: #e2e8f0;
+}
+
+/* ── Light mode overrides for layout elements ── */
+html.light .sidebar {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
+
+html.light .sidebar a:not(.active):not([class*="bg-[#d2e823]"]) {
+    color: #64748b !important;
+}
+
+html.light .sidebar a:not(.active):not([class*="bg-[#d2e823]"]):hover {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+}
+
+html.light .topbar {
+    background: rgba(255, 255, 255, 0.88) !important;
+    border-color: #e2e8f0 !important;
+    backdrop-filter: blur(14px);
+}
+
+html.light .card,
+html.light .stat-box,
+html.light .bg-\[\#0f172a\],
+html.light .bg-\[\#0b1120\],
+html.light .bg-\[\#0f172a\]\/70,
+html.light .bg-\[\#0f172a\]\/80,
+html.light .bg-\[\#0f172a\]\/90 {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+}
+
+html.light .bg-\[\#080c14\],
+html.light .bg-\[\#020617\] {
+    background-color: #f8fafc !important;
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+html.light .bg-black\/40,
+html.light .bg-black\/30,
+html.light .bg-black\/20 {
+    background-color: #f1f5f9 !important;
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+html.light .bg-white\/5,
+html.light .bg-white\/10,
+html.light .bg-white\/\[0\.04\],
+html.light .bg-white\/\[0\.05\],
+html.light .bg-white\/\[0\.08\] {
+    background-color: #f1f5f9 !important;
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+html.light .border-white\/5,
+html.light .border-white\/8,
+html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/20 {
+    border-color: #e2e8f0 !important;
+}
+
+html.light .divide-white\/5 > :not([hidden]) ~ :not([hidden]) {
+    border-color: #e2e8f0 !important;
+}
+
+/* In light mode, turn white text to dark ONLY when inside light-themed containers (never inside dark/colored buttons or badges) */
+html.light .card:not(.keep-white) > .text-white,
+html.light .stat-box:not(.keep-white) > .text-white,
+html.light .bg-white .text-white:not([class*="bg-"]):not([class*="keep-white"]),
+html.light .bg-slate-50 .text-white:not([class*="bg-"]):not([class*="keep-white"]),
+html.light .bg-slate-100 .text-white:not([class*="bg-"]):not([class*="keep-white"]) {
+    color: #0f172a !important;
+}
+
+/* Explicitly preserve crisp white text on dark/colored buttons, headers, and badges in light mode */
+html.light .btn-dark,
+html.light .btn-dark *,
+html.light .bg-slate-900:not(.card),
+html.light .bg-slate-900:not(.card) *:not([class*="text-slate-"]):not([class*="text-lime-"]):not([class*="text-emerald-"]):not([class*="text-black"]):not([class*="text-rose-"]),
+html.light .bg-slate-800,
+html.light .bg-slate-800 *:not([class*="text-slate-"]):not([class*="text-lime-"]):not([class*="text-emerald-"]):not([class*="text-black"]),
+html.light .bg-black,
+html.light .bg-black *,
+html.light .bg-blue-600,
+html.light .bg-blue-600 *,
+html.light .bg-indigo-600,
+html.light .bg-indigo-600 *,
+html.light .bg-\[\#7c3aed\],
+html.light .bg-\[\#7c3aed\] *,
+html.light .keep-white,
+html.light .keep-white * {
+    color: #ffffff !important;
+}
+
+html.light .keep-white-only {
+    color: #ffffff !important;
+}
+
+html.light .card .text-white\/90,
+html.light .card .text-white\/80,
+html.light .bg-white .text-white\/90,
+html.light .bg-white .text-white\/80,
+html.light .bg-slate-50 .text-white\/90,
+html.light .bg-slate-50 .text-white\/80 {
+    color: #1e293b !important;
+}
+
+html.light .card .text-white\/70,
+html.light .card .text-white\/60,
+html.light .card .text-white\/50,
+html.light .bg-white .text-white\/70,
+html.light .bg-white .text-white\/60,
+html.light .bg-white .text-white\/50 {
+    color: #475569 !important;
+}
+
+html.light .card .text-white\/40,
+html.light .card .text-white\/35,
+html.light .card .text-white\/30,
+html.light .card .text-white\/20,
+html.light .bg-white .text-white\/40,
+html.light .bg-white .text-white\/35,
+html.light .bg-white .text-white\/30,
+html.light .bg-white .text-white\/20 {
+    color: #64748b !important;
+}
+
+html.light .text-slate-400 {
+    color: #64748b !important;
+}
+
+html.light .text-slate-300 {
+    color: #334155 !important;
+}
+
+html.light .dash-grid-bg {
+    background-image:
+        linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px) !important;
+}
+
+/* Form controls in light mode */
+html.light input,
+html.light select,
+html.light textarea {
+    color: #0f172a !important;
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+}
+
+html.light select option {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* Modals and Dropdowns in light mode */
+html.light [x-show="open"],
+html.light .dropdown-menu {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Table styles */
+html.light table th {
+    background-color: #f1f5f9 !important;
+    color: #475569 !important;
+    border-color: #e2e8f0 !important;
+}
+
+html.light table td {
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+html.light table tr:hover {
+    background-color: #f8fafc !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+html.light ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 9999px;
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+/* Touch targets and mobile responsiveness */
+@media (max-width: 640px) {
+    button, a, input, select {
+        min-height: 38px;
+    }
+
+    .table-responsive {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+[data-flux-field] {
+    @apply grid gap-2;
+}
+
+[data-flux-label] {
+    @apply  !mb-0 !leading-tight;
+}
+
+.nav-icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}

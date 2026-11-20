@@ -1,0 +1,24 @@
+================================================================================
+SMART CAMPUS COMPANION - PROJECT DEMONSTRATION VIDEO
+================================================================================
+
+Due to GitHub's file size limit of 100 MB per file, the raw video file 
+(Demo.mp4 ~ 246.7 MB) cannot be hosted directly in this Git repository.
+
+You can watch and download the complete high-resolution demonstration video 
+at the public Google Drive link below:
+
+Google Drive Video Link:
+https://drive.google.com/file/d/1Jpdm2f7kGx67e2XJ7fswbfcVbeBm8nml/view?usp=sharing
+
+Features Demonstrated:
+- Role-based Authentication & Access Control (Admin, Faculty, Student, Timetable Committee)
+- Dynamic Master Timetable Scheduling & Clash Reporting System
+- Interactive Campus Map & Indoor Navigation
+- Automated Grievance / Complaint Redressal with Proof Attachments
+- Circulars & Departmental Notice Tracking with Accountability
+- Profile Management, Remember Me, and Password Recovery
+
+================================================================================
+VESIT Capstone Project (Sem 7) - Group 15
+================================================================================

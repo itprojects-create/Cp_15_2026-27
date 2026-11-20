@@ -3,6 +3,7 @@
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Complaint;
 
 return new #[Layout('components.layouts.student')] class extends Component {
@@ -30,17 +31,36 @@ return new #[Layout('components.layouts.student')] class extends Component {
             'photo' => 'image|max:2048',
         ]);
 
+        $user = auth()->user();
+
+        if ($user->profile_photo && Storage::disk('public')->exists($user->profile_photo)) {
+            Storage::disk('public')->delete($user->profile_photo);
+        }
+
         $path = $this->photo->store('profiles', 'public');
 
-        auth()->user()->update([
+        $user->update([
             'profile_photo' => $path,
         ]);
 
-        auth()->setUser(auth()->user()->fresh());
+        auth()->setUser($user->fresh());
 
         $this->reset('photo');
 
         session()->flash('success', 'Profile photo updated successfully');
+    }
+
+    public function deletePhoto()
+    {
+        $user = auth()->user();
+        if ($user->profile_photo && Storage::disk('public')->exists($user->profile_photo)) {
+            Storage::disk('public')->delete($user->profile_photo);
+        }
+        $user->update([
+            'profile_photo' => null,
+        ]);
+        auth()->setUser($user->fresh());
+        session()->flash('success', 'Profile photo removed successfully');
     }
 
     public function updateInfo()
@@ -103,7 +123,11 @@ return new #[Layout('components.layouts.student')] class extends Component {
                         class="w-24 h-24 rounded-full object-cover ring-4 ring-lime-500/40 dark:ring-[#d2e823]/40 shadow-md" />
                 @elseif (auth()->user()->profile_photo)
                     <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}"
-                        class="w-24 h-24 rounded-full object-cover border border-slate-200 dark:border-white/10 shadow-md" />
+                        class="w-24 h-24 rounded-full object-cover border border-slate-200 dark:border-white/10 shadow-md"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                    <div style="display: none;" class="w-24 h-24 rounded-full bg-[#d2e823] text-black items-center justify-center text-3xl font-black shadow-md">
+                        {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+                    </div>
                 @else
                     <div class="w-24 h-24 rounded-full bg-[#d2e823] text-black flex items-center justify-center text-3xl font-black shadow-md">
                         {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
@@ -138,6 +162,15 @@ return new #[Layout('components.layouts.student')] class extends Component {
                     <span wire:loading.remove wire:target="savePhoto">Upload Photo</span>
                     <span wire:loading wire:target="savePhoto">Saving...</span>
                 </button>
+
+                @if(auth()->user()->profile_photo)
+                <button type="button"
+                    wire:click="deletePhoto"
+                    wire:confirm="Are you sure you want to remove your profile photo?"
+                    class="bg-red-500/10 text-red-500 border border-red-500/20 px-4 py-2 rounded-xl text-xs font-bold hover:bg-red-500/20 active:scale-[0.98] transition flex items-center gap-1.5 shadow-sm">
+                    Remove Photo
+                </button>
+                @endif
             </div>
 
             <div wire:loading wire:target="photo" class="text-xs text-blue-600 dark:text-blue-400 font-medium">

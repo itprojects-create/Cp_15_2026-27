@@ -45,6 +45,18 @@ return new #[Layout('components.layouts.teacher')] class extends Component {
         session()->flash('success', 'Profile photo updated successfully');
     }
 
+    public function deletePhoto()
+    {
+        $user = auth()->user();
+        if ($user->profile_photo && Storage::disk('public')->exists($user->profile_photo)) {
+            Storage::disk('public')->delete($user->profile_photo);
+        }
+        $user->profile_photo = null;
+        $user->save();
+        auth()->setUser($user->fresh());
+        session()->flash('success', 'Profile photo removed successfully');
+    }
+
     public function updateInfo()
     {
         $user = auth()->user();

@@ -1030,8 +1030,8 @@ new #[Layout('components.layouts.auth.fullscreen')] class extends Component {
 
                         {{-- Remember --}}
                         <div class="rem-row">
-                            <input id="remember" name="remember" type="checkbox" class="chk" />
-                            <label for="remember">Keep me signed in for 1 day</label>
+                            <input id="remember" name="remember" type="checkbox" value="1" {{ old('remember') ? 'checked' : '' }} class="chk" />
+                            <label for="remember" style="cursor: pointer;">Remember me</label>
                         </div>
 
                         {{-- Submit --}}

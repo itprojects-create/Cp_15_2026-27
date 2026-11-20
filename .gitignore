@@ -36,6 +36,10 @@ vendor/
 **/.phpunit.cache
 **/scratch/
 
+# Large video files (>100MB exceeds GitHub push limit)
+*.mp4
+**/*.mp4
+
 # IDE & OS Junk
 .DS_Store
 Thumbs.db

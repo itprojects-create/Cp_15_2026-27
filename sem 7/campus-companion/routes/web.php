@@ -155,7 +155,9 @@ Route::post('/login', function (Request $request) {
         'password' => ['required'],
     ]);
 
-    if (! Auth::attempt($credentials, $request->boolean('remember'))) {
+    $remember = $request->boolean('remember');
+
+    if (! Auth::attempt($credentials, $remember)) {
         return back()->withErrors([
             'email' => 'Invalid credentials',
         ])->withInput();
@@ -173,4 +175,14 @@ Route::post('/login', function (Request $request) {
     });
 
 })->name('login.post');
+
+// Safe file serving route for uploads and public storage
+Route::get('/storage/{path}', function ($path) {
+    $fullPath = storage_path('app/public/' . $path);
+    if (! file_exists($fullPath)) {
+        abort(404);
+    }
+    return response()->file($fullPath);
+})->where('path', '.*')->name('storage.local');
+
 require __DIR__.'/auth.php';

@@ -44,24 +44,38 @@ class SendUnseenReminders extends Command
                 ->pluck('user_id')
                 ->toArray();
 
+            $message = "Reminder: You have an unread notice: '{$notice->title}'";
+
+            // Pre-fetch all user IDs who have already received this reminder
+            $alreadyNotifiedUserIds = \App\Models\Notification::where('message', $message)
+                ->pluck('user_id')
+                ->flip()
+                ->toArray();
+
+            $batchToInsert = [];
+            $now = now();
+
             foreach ($students as $student) {
                 if (in_array($student->id, $readUserIds)) {
                     continue;
                 }
 
-                $message = "Reminder: You have an unread notice: '{$notice->title}'";
-
-                // Check if already notified about this specific reminder
-                $alreadyNotified = \App\Models\Notification::where('user_id', $student->id)
-                    ->where('message', $message)
-                    ->exists();
-
-                if (!$alreadyNotified) {
-                    \App\Models\Notification::create([
+                if (!isset($alreadyNotifiedUserIds[$student->id])) {
+                    $batchToInsert[] = [
                         'user_id' => $student->id,
                         'message' => $message,
-                    ]);
+                        'read' => false,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
                     $remindersCount++;
+                }
+            }
+
+            if (!empty($batchToInsert)) {
+                // Chunk insert to respect SQL parameter limits
+                foreach (array_chunk($batchToInsert, 100) as $chunk) {
+                    \App\Models\Notification::insert($chunk);
                 }
             }
         }

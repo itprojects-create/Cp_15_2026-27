@@ -4,6 +4,18 @@
 > **Institution:** Vivekanand Education Society's Institute of Technology (VESIT), Chembur, Mumbai  
 > **Affiliation:** University of Mumbai  
 > **Academic Years:** Semester 6 & Semester 7  
+> **Live Demo Guide:** [DEMONSTRATION_WALKTHROUGH.md](DEMONSTRATION_WALKTHROUGH.md)  
+> **Demo Credentials:** [DEMO_CREDENTIALS.md](DEMO_CREDENTIALS.md)  
+> **Automated Test Suite:** **73 / 73 Tests Passed (213 assertions, 0 errors)**
+
+---
+
+## ⚡ Quick Evaluation & Demo Links
+
+- 🔑 **[Master Demo Credentials (DEMO_CREDENTIALS.md)](DEMO_CREDENTIALS.md)** — Instant logins for Admin, Scheduler, Faculty, and Students (Default password: `password`).
+- 🎬 **[Step-by-Step Demonstration Walkthrough (DEMONSTRATION_WALKTHROUGH.md)](DEMONSTRATION_WALKTHROUGH.md)** — Complete 3-to-5 minute examiner-ready demonstration script, feature checklist, and evaluator technical Q&A defense.
+- 📖 **[Comprehensive Technical Specification](sem%207/campus-companion/detail-of-campus-companion.md)** — Architectural paradigms, relational database schema, algorithms, and system flowcharts.
+- 📘 **[Official Dissertation / Black Book PDF](sem%207/SmartCampusCompanion.BLACKBOOK.pdf)** — Complete final year dissertation.  
 
 ---
 
